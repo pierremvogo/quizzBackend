@@ -1,0 +1,34 @@
+CREATE TABLE STUDENTS (
+  id INT PRIMARY KEY,
+  student_number INT UNIQUE NOT NULL,
+  name VARCHAR(64) NOT NULL,
+  surname VARCHAR(64) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE QUIZ (
+  id INT PRIMARY KEY,
+  title VARCHAR(100) NOT NULL,
+  description TEXT,
+  student_id INT,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (student_id) REFERENCES STUDENTS (id)
+);
+
+CREATE TABLE QUESTIONS (
+  id INT PRIMARY KEY,
+  question_text TEXT NOT NULL,
+  quiz_id INT NOT NULL,
+  FOREIGN KEY (quiz_id) REFERENCES QUIZ (id)
+);
+
+CREATE TABLE ANSWERS (
+  id INT PRIMARY KEY,
+  question_id INT NOT NULL,
+  student_id INT NOT NULL,
+  answer_text TEXT NOT NULL,
+  is_correct BOOLEAN NOT NULL,
+  FOREIGN KEY (question_id) REFERENCES QUESTIONS (id),
+  FOREIGN KEY (student_id) REFERENCES STUDENTS (id)
+);
+
