@@ -40,9 +40,9 @@ Quizz.findById = (id, result) => {
 };
 
 Quizz.getAll = (title, result) => {
-  let query = "SELECT * FROM Quizz";
+  let query = "SELECT * FROM students";
 
-  if (title) {
+  if (name) {
     query += ` WHERE title LIKE '%${title}%'`;
   }
 
@@ -66,7 +66,7 @@ Quizz.getAllPublished = result => {
       return;
     }
 
-    console.log("Quizzs: ", res);
+    console.log("Quizz: ", res);
     result(null, res);
   });
 };

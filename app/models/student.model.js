@@ -38,11 +38,11 @@ Student.findById = (id, result) => {
   });
 };
 
-Student.getAll = (title, result) => {
-  let query = "SELECT * FROM Student";
+Student.getAll = (name, result) => {
+  let query = "SELECT * FROM students";
 
-  if (title) {
-    query += ` WHERE title LIKE '%${title}%'`;
+  if (name) {
+    query += ` WHERE title LIKE '%${name}%'`;
   }
 
   sql.query(query, (err, res) => {

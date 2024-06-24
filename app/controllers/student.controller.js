@@ -1,4 +1,4 @@
-const Student = require("../models/quizz.model.js");
+const Student = require("../models/student.model.js");
 
 // Create and Save a new Student
 exports.create = (req, res) => {
@@ -9,14 +9,14 @@ exports.create = (req, res) => {
     });
   }
   // Create a Student
-  const Student = new Student({
+  const Students = new Student({
     student_number: req.body.student_number,
     name: req.body.name,
     surname: req.body.surname
   });
 
   // Save Student in the database
-  Student.create(Student, (err, data) => {
+  Student.create(Students, (err, data) => {
     if (err)
       res.status(500).send({
         message:
@@ -28,9 +28,9 @@ exports.create = (req, res) => {
 
 // Retrieve all Students from the database (with condition).
 exports.findAll = (req, res) => {
-  const title = req.query.title;
+  const name = req.query.name;
 
-  Student.getAll(title, (err, data) => {
+  Student.getAll(name, (err, data) => {
     if (err)
       res.status(500).send({
         message:
