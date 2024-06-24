@@ -2,6 +2,8 @@ const express = require("express");
 // const bodyParser = require("body-parser"); /* deprecated */
 const cors = require("cors");
 
+const db = require("./mysql/db");
+
 const app = express();
 
 var corsOptions = {
@@ -16,12 +18,21 @@ app.use(express.json()); /* bodyParser.json() is deprecated */
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true })); /* bodyParser.urlencoded() is deprecated */
 
+db.connect((err) => {
+  if (err) {
+    console.error('Error connecting to MySQL: ' + err.stack);
+    return;
+  }
+  console.log('Connected to MySQL as ID ' + db.threadId);
+});
+
+
 // simple route
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to bezkoder application." });
 });
 
-require("./app/routes/tutorial.routes.js")(app);
+require("./app/routes/student.routes.js")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
