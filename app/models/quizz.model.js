@@ -4,24 +4,23 @@ const sql = require("../../mysql/db.js");
 const Quizz = function(Quizz) {
   this.title = Quizz.title;
   this.description = Quizz.description;
-  this.published = Quizz.published;
 };
 
 Quizz.create = (newQuizz, result) => {
-  sql.query("INSERT INTO Quizz SET ?", newQuizz, (err, res) => {
+  sql.query("INSERT INTO quiz SET ?", newQuizz, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
       return;
     }
 
-    console.log("created Quizz: ", { id: res.insertId, ...newQuizz });
+    console.log("created quiz: ", { id: res.insertId, ...newQuizz });
     result(null, { id: res.insertId, ...newQuizz });
   });
 };
 
 Quizz.findById = (id, result) => {
-  sql.query(`SELECT * FROM Quizz WHERE id = ${id}`, (err, res) => {
+  sql.query(`SELECT * FROM quiz WHERE id = ${id}`, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
@@ -40,9 +39,9 @@ Quizz.findById = (id, result) => {
 };
 
 Quizz.getAll = (title, result) => {
-  let query = "SELECT * FROM students";
+  let query = "SELECT * FROM quiz";
 
-  if (name) {
+  if (title) {
     query += ` WHERE title LIKE '%${title}%'`;
   }
 
@@ -58,8 +57,8 @@ Quizz.getAll = (title, result) => {
   });
 };
 
-Quizz.getAllPublished = result => {
-  sql.query("SELECT * FROM Quizz WHERE published=true", (err, res) => {
+/*Quizz.getAllPublished = result => {
+  sql.query("SELECT * FROM quiz WHERE published=true", (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(null, err);
@@ -69,12 +68,12 @@ Quizz.getAllPublished = result => {
     console.log("Quizz: ", res);
     result(null, res);
   });
-};
+};*/
 
 Quizz.updateById = (id, Quizz, result) => {
   sql.query(
-    "UPDATE Quizzs SET title = ?, description = ?, published = ? WHERE id = ?",
-    [Quizz.title, Quizz.description, Quizz.published, id],
+    "UPDATE quiz SET title = ?, description = ?  WHERE id = ?",
+    [Quizz.title, Quizz.description, id],
     (err, res) => {
       if (err) {
         console.log("error: ", err);
@@ -95,7 +94,7 @@ Quizz.updateById = (id, Quizz, result) => {
 };
 
 Quizz.remove = (id, result) => {
-  sql.query("DELETE FROM Quizzs WHERE id = ?", id, (err, res) => {
+  sql.query("DELETE FROM quiz WHERE id = ?", id, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(null, err);
@@ -114,7 +113,7 @@ Quizz.remove = (id, result) => {
 };
 
 Quizz.removeAll = result => {
-  sql.query("DELETE FROM Quizzs", (err, res) => {
+  sql.query("DELETE FROM quiz", (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(null, err);

@@ -2,13 +2,11 @@ const sql = require("../../mysql/db.js");
 
 // constructor
 const Question = function(Question) {
-  this.title = Question.title;
-  this.description = Question.description;
-  this.published = Question.published;
+  this.question_text = Question.question_text;
 };
 
 Question.create = (newQuestion, result) => {
-  sql.query("INSERT INTO Questions SET ?", newQuestion, (err, res) => {
+  sql.query("INSERT INTO questions SET ?", newQuestion, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
@@ -21,7 +19,7 @@ Question.create = (newQuestion, result) => {
 };
 
 Question.findById = (id, result) => {
-  sql.query(`SELECT * FROM Questions WHERE id = ${id}`, (err, res) => {
+  sql.query(`SELECT * FROM questions WHERE id = ${id}`, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
@@ -40,7 +38,7 @@ Question.findById = (id, result) => {
 };
 
 Question.getAll = (title, result) => {
-  let query = "SELECT * FROM Questions";
+  let query = "SELECT * FROM questions";
 
   if (title) {
     query += ` WHERE title LIKE '%${title}%'`;
@@ -58,8 +56,8 @@ Question.getAll = (title, result) => {
   });
 };
 
-Question.getAllPublished = result => {
-  sql.query("SELECT * FROM Questions WHERE published=true", (err, res) => {
+/*Question.getAllPublished = result => {
+  sql.query("SELECT * FROM questions WHERE published=true", (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(null, err);
@@ -69,12 +67,12 @@ Question.getAllPublished = result => {
     console.log("Questions: ", res);
     result(null, res);
   });
-};
+};*/
 
 Question.updateById = (id, Question, result) => {
   sql.query(
-    "UPDATE Questions SET title = ?, description = ?, published = ? WHERE id = ?",
-    [Question.title, Question.description, Question.published, id],
+    "UPDATE questions SET question_text = ? WHERE id = ?",
+    [Question.question_text, id],
     (err, res) => {
       if (err) {
         console.log("error: ", err);
@@ -95,7 +93,7 @@ Question.updateById = (id, Question, result) => {
 };
 
 Question.remove = (id, result) => {
-  sql.query("DELETE FROM Questions WHERE id = ?", id, (err, res) => {
+  sql.query("DELETE FROM questions WHERE id = ?", id, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(null, err);
@@ -114,7 +112,7 @@ Question.remove = (id, result) => {
 };
 
 Question.removeAll = result => {
-  sql.query("DELETE FROM Questions", (err, res) => {
+  sql.query("DELETE FROM questions", (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(null, err);

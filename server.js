@@ -33,7 +33,9 @@ app.get("/", (req, res) => {
 });
 
 require("./app/routes/student.routes.js")(app);
-//require("./app/routes/quizz.routes.js")(app);
+require("./app/routes/quizz.routes.js")(app);
+require("./app/routes/question.routes.js")(app);
+require("./app/routes/answer.routes.js")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

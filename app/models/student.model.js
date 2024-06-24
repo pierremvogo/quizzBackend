@@ -20,7 +20,7 @@ Student.create = (newStudent, result) => {
 };
 
 Student.findById = (id, result) => {
-  sql.query(`SELECT * FROM Student WHERE id = ${id}`, (err, res) => {
+  sql.query(`SELECT * FROM students WHERE id = ${id}`, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
@@ -58,7 +58,7 @@ Student.getAll = (name, result) => {
 };
 
 Student.getAllPublished = result => {
-  sql.query("SELECT * FROM Student WHERE published=true", (err, res) => {
+  sql.query("SELECT * FROM students WHERE published=true", (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(null, err);
@@ -72,8 +72,8 @@ Student.getAllPublished = result => {
 
 Student.updateById = (id, Student, result) => {
   sql.query(
-    "UPDATE Students SET title = ?, description = ?, published = ? WHERE id = ?",
-    [Student.title, Student.description, Student.published, id],
+    "UPDATE students SET student_number = ?, name = ?, surname = ? WHERE id = ?",
+    [Student.student_number, Student.name, Student.surname, id],
     (err, res) => {
       if (err) {
         console.log("error: ", err);
@@ -94,7 +94,7 @@ Student.updateById = (id, Student, result) => {
 };
 
 Student.remove = (id, result) => {
-  sql.query("DELETE FROM Students WHERE id = ?", id, (err, res) => {
+  sql.query("DELETE FROM students WHERE id = ?", id, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(null, err);
@@ -113,7 +113,7 @@ Student.remove = (id, result) => {
 };
 
 Student.removeAll = result => {
-  sql.query("DELETE FROM Students", (err, res) => {
+  sql.query("DELETE FROM students", (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(null, err);

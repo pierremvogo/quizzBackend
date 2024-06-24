@@ -7,7 +7,7 @@ module.exports = app => {
   router.post("/create", students.create);
 
   // Retrieve all students
-  router.get("/getAll", students.findAll);
+  router.get("/get", students.findAll);
 
   // Retrieve all published students
   router.get("/published", students.findAllPublished);

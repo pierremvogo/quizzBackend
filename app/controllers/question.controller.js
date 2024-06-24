@@ -1,4 +1,4 @@
-const Question = require("../models/Question.model.js");
+const Question = require("../models/question.model.js");
 
 // Create and Save a new Question
 exports.create = (req, res) => {
@@ -10,9 +10,7 @@ exports.create = (req, res) => {
   }
   // Create a Question
   const Question = new Question({
-    title: req.body.title,
-    description: req.body.description,
-    published: req.body.published || false
+    question_text: req.body.question_text
   });
 
   // Save Question in the database

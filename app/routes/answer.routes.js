@@ -1,28 +1,25 @@
 module.exports = app => {
-  const quizz = require("../controllers/quizz.controller.js");
+  const quizz = require("../controllers/answer.controller.js");
 
   var router = require("express").Router();
 
   // Create a new quizz
-  router.post("/", quizz.create);
+  router.post("/create", quizz.create);
 
   // Retrieve all quizz
-  router.get("/", quizz.findAll);
-
-  // Retrieve all published quizz
-  router.get("/published", quizz.findAllPublished);
+  router.get("/get", quizz.findAll);
 
   // Retrieve a single quizz with id
-  router.get("/:id", quizz.findOne);
+  router.get("/get/:id", quizz.findOne);
 
   // Update a quizz with id
-  router.put("/:id", quizz.update);
+  router.put("/update/:id", quizz.update);
 
   // Delete a quizz with id
-  router.delete("/:id", quizz.delete);
+  router.delete("/delete/:id", quizz.delete);
 
   // Delete all quizz
-  router.delete("/", quizz.deleteAll);
+  router.delete("/delete", quizz.deleteAll);
 
-  app.use('/api/quizz', router);
+  app.use('/api/answers', router);
 };

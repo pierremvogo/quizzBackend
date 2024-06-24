@@ -12,7 +12,6 @@ exports.create = (req, res) => {
   const Quizz = new Quizz({
     title: req.body.title,
     description: req.body.description,
-    published: req.body.published || false
   });
 
   // Save Quizz in the database

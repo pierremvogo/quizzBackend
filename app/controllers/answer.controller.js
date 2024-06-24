@@ -10,9 +10,8 @@ exports.create = (req, res) => {
   }
   // Create a Answer
   const Answer = new Answer({
-    title: req.body.title,
-    description: req.body.description,
-    published: req.body.published || false
+    answer_text: req.body.answer_text,
+    is_correct: req.body.is_correct
   });
 
   // Save Answer in the database
