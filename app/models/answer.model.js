@@ -1,27 +1,27 @@
 const sql = require("../../mysql/db.js");
 
 // constructor
-const Student = function(student) {
-  this.title = student.title;
-  this.description = student.description;
-  this.published = student.published;
+const Answer = function(Answer) {
+  this.title = Answer.title;
+  this.description = Answer.description;
+  this.published = Answer.published;
 };
 
-Student.create = (newstudent, result) => {
-  sql.query("INSERT INTO Students SET ?", newstudent, (err, res) => {
+Answer.create = (newAnswer, result) => {
+  sql.query("INSERT INTO Answers SET ?", newAnswer, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
       return;
     }
 
-    console.log("created Student: ", { id: res.insertId, ...newstudent });
-    result(null, { id: res.insertId, ...newStudent });
+    console.log("created Answer: ", { id: res.insertId, ...newAnswer });
+    result(null, { id: res.insertId, ...newAnswer });
   });
 };
 
-Student.findById = (id, result) => {
-  sql.query(`SELECT * FROM Students WHERE id = ${id}`, (err, res) => {
+Answer.findById = (id, result) => {
+  sql.query(`SELECT * FROM Answers WHERE id = ${id}`, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
@@ -29,18 +29,18 @@ Student.findById = (id, result) => {
     }
 
     if (res.length) {
-      console.log("found Student: ", res[0]);
+      console.log("found Answer: ", res[0]);
       result(null, res[0]);
       return;
     }
 
-    // not found Student with the id
+    // not found Answer with the id
     result({ kind: "not_found" }, null);
   });
 };
 
-Student.getAll = (title, result) => {
-  let query = "SELECT * FROM Students";
+Answer.getAll = (title, result) => {
+  let query = "SELECT * FROM Answers";
 
   if (title) {
     query += ` WHERE title LIKE '%${title}%'`;
@@ -53,28 +53,28 @@ Student.getAll = (title, result) => {
       return;
     }
 
-    console.log("Students: ", res);
+    console.log("Answers: ", res);
     result(null, res);
   });
 };
 
-Student.getAllPublished = result => {
-  sql.query("SELECT * FROM Students WHERE published=true", (err, res) => {
+Answer.getAllPublished = result => {
+  sql.query("SELECT * FROM Answers WHERE published=true", (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(null, err);
       return;
     }
 
-    console.log("Students: ", res);
+    console.log("Answers: ", res);
     result(null, res);
   });
 };
 
-Student.updateById = (id, Student, result) => {
+Answer.updateById = (id, Answer, result) => {
   sql.query(
-    "UPDATE Students SET title = ?, description = ?, published = ? WHERE id = ?",
-    [Student.title, Student.description, Student.published, id],
+    "UPDATE Answers SET title = ?, description = ?, published = ? WHERE id = ?",
+    [Answer.title, Answer.description, Answer.published, id],
     (err, res) => {
       if (err) {
         console.log("error: ", err);
@@ -83,19 +83,19 @@ Student.updateById = (id, Student, result) => {
       }
 
       if (res.affectedRows == 0) {
-        // not found Student with the id
+        // not found Answer with the id
         result({ kind: "not_found" }, null);
         return;
       }
 
-      console.log("updated Student: ", { id: id, ...Student });
-      result(null, { id: id, ...Student });
+      console.log("updated Answer: ", { id: id, ...Answer });
+      result(null, { id: id, ...Answer });
     }
   );
 };
 
-Student.remove = (id, result) => {
-  sql.query("DELETE FROM Students WHERE id = ?", id, (err, res) => {
+Answer.remove = (id, result) => {
+  sql.query("DELETE FROM Answers WHERE id = ?", id, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(null, err);
@@ -103,27 +103,27 @@ Student.remove = (id, result) => {
     }
 
     if (res.affectedRows == 0) {
-      // not found Student with the id
+      // not found Answer with the id
       result({ kind: "not_found" }, null);
       return;
     }
 
-    console.log("deleted Student with id: ", id);
+    console.log("deleted Answer with id: ", id);
     result(null, res);
   });
 };
 
-Student.removeAll = result => {
-  sql.query("DELETE FROM Students", (err, res) => {
+Answer.removeAll = result => {
+  sql.query("DELETE FROM Answers", (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(null, err);
       return;
     }
 
-    console.log(`deleted ${res.affectedRows} Students`);
+    console.log(`deleted ${res.affectedRows} Answers`);
     result(null, res);
   });
 };
 
-module.exports = Student;
+module.exports = Answer;

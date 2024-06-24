@@ -1,6 +1,6 @@
-const Quizz = require("../models/quizz.model.js");
+const Question = require("../models/Question.model.js");
 
-// Create and Save a new Quizz
+// Create and Save a new Question
 exports.create = (req, res) => {
   // Validate request
   if (!req.body) {
@@ -8,68 +8,68 @@ exports.create = (req, res) => {
       message: "Content can not be empty!"
     });
   }
-  // Create a Quizz
-  const Quizz = new Quizz({
+  // Create a Question
+  const Question = new Question({
     title: req.body.title,
     description: req.body.description,
     published: req.body.published || false
   });
 
-  // Save Quizz in the database
-  Quizz.create(Quizz, (err, data) => {
+  // Save Question in the database
+  Question.create(Question, (err, data) => {
     if (err)
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the Quizz."
+          err.message || "Some error occurred while creating the Question."
       });
     else res.send(data);
   });
 };
 
-// Retrieve all Quizzs from the database (with condition).
+// Retrieve all Questions from the database (with condition).
 exports.findAll = (req, res) => {
   const title = req.query.title;
 
-  Quizz.getAll(title, (err, data) => {
+  Question.getAll(title, (err, data) => {
     if (err)
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving Quizzs."
+          err.message || "Some error occurred while retrieving Questions."
       });
     else res.send(data);
   });
 };
 
-// Find a single Quizz by Id
+// Find a single Question by Id
 exports.findOne = (req, res) => {
-  Quizz.findById(req.params.id, (err, data) => {
+  Question.findById(req.params.id, (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({
-          message: `Not found Quizz with id ${req.params.id}.`
+          message: `Not found Question with id ${req.params.id}.`
         });
       } else {
         res.status(500).send({
-          message: "Error retrieving Quizz with id " + req.params.id
+          message: "Error retrieving Question with id " + req.params.id
         });
       }
     } else res.send(data);
   });
 };
 
-// find all published Quizzs
+// find all published Questions
 exports.findAllPublished = (req, res) => {
-  Quizz.getAllPublished((err, data) => {
+  Question.getAllPublished((err, data) => {
     if (err)
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving Quizzs."
+          err.message || "Some error occurred while retrieving Questions."
       });
     else res.send(data);
   });
 };
 
-// Update a Quizz identified by the id in the request
+// Update a Question identified by the id in the request
 exports.update = (req, res) => {
   // Validate Request
   if (!req.body) {
@@ -80,18 +80,18 @@ exports.update = (req, res) => {
 
   console.log(req.body);
 
-  Quizz.updateById(
+  Question.updateById(
     req.params.id,
-    new Quizz(req.body),
+    new Question(req.body),
     (err, data) => {
       if (err) {
         if (err.kind === "not_found") {
           res.status(404).send({
-            message: `Not found Quizz with id ${req.params.id}.`
+            message: `Not found Question with id ${req.params.id}.`
           });
         } else {
           res.status(500).send({
-            message: "Error updating Quizz with id " + req.params.id
+            message: "Error updating Question with id " + req.params.id
           });
         }
       } else res.send(data);
@@ -99,31 +99,31 @@ exports.update = (req, res) => {
   );
 };
 
-// Delete a Quizz with the specified id in the request
+// Delete a Question with the specified id in the request
 exports.delete = (req, res) => {
-  Quizz.remove(req.params.id, (err, data) => {
+  Question.remove(req.params.id, (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({
-          message: `Not found Quizz with id ${req.params.id}.`
+          message: `Not found Question with id ${req.params.id}.`
         });
       } else {
         res.status(500).send({
-          message: "Could not delete Quizz with id " + req.params.id
+          message: "Could not delete Question with id " + req.params.id
         });
       }
-    } else res.send({ message: `Quizz was deleted successfully!` });
+    } else res.send({ message: `Question was deleted successfully!` });
   });
 };
 
-// Delete all Quizzs from the database.
+// Delete all Questions from the database.
 exports.deleteAll = (req, res) => {
-  Quizz.removeAll((err, data) => {
+  Question.removeAll((err, data) => {
     if (err)
       res.status(500).send({
         message:
-          err.message || "Some error occurred while removing all Quizzs."
+          err.message || "Some error occurred while removing all Questions."
       });
-    else res.send({ message: `All Quizzs were deleted successfully!` });
+    else res.send({ message: `All Questions were deleted successfully!` });
   });
 };
