@@ -19,7 +19,7 @@ module.exports = app => {
   router.delete("/delete/:id", quizz.delete);
 
   // Delete all quizz
-  router.delete("/delete", quizz.deleteAll);
+  router.delete("/deleteall", quizz.deleteAll);
 
   app.use('/api/quizz', router);
 };

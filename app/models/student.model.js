@@ -20,7 +20,7 @@ Student.create = (newStudent, result) => {
 };
 
 Student.findById = (id, result) => {
-  sql.query(`SELECT * FROM tudents WHERE id = ${id}`, (err, res) => {
+  sql.query(`SELECT * FROM students WHERE id = ${id}`, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);

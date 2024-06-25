@@ -131,5 +131,6 @@ exports.deleteAll = (req, res) => {
           err.message || "Some error occurred while removing all Students."
       });
     else res.send({ message: `All Students were deleted successfully!` });
+    
   });
 };

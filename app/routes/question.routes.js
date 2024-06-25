@@ -13,7 +13,7 @@ module.exports = app => {
   router.get("/published", quizz.findAllPublished);
 
   // Retrieve a single quizz with id
-  router.get("/get/:id", quizz.findOne);
+  router.get("/getById/:id", quizz.findOne);
 
   // Update a quizz with id
   router.put("/update/:id", quizz.update);
@@ -22,7 +22,7 @@ module.exports = app => {
   router.delete("/delete/:id", quizz.delete);
 
   // Delete all quizz
-  router.delete("/delete", quizz.deleteAll);
+  router.delete("/deleteAll", quizz.deleteAll);
 
   app.use('/api/questions', router);
 };

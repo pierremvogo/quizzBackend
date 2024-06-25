@@ -79,9 +79,14 @@ exports.update = (req, res) => {
 
   console.log(req.body);
 
+  const Questions = {
+    question_text: req.body.question_text,
+    quiz_id: req.body.quiz_id
+  };
+
   Question.updateById(
     req.params.id,
-    new Question(req.body),
+    Questions,
     (err, data) => {
       if (err) {
         if (err.kind === "not_found") {
