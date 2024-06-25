@@ -37,7 +37,7 @@ app.post("/api/students/create", students.create);
 app.get("/api/students/get", students.findAll);
 app.get("/api/students/getById/:id", students.findOne);
 app.put("/api/students/update/:id", students.update);
-app.update("/api/students/delete/:id", students.delete);
+app.delete("/api/students/delete/:id", students.delete);
 app.delete("/api/students/delete/all", students.deleteAll);
 
 
