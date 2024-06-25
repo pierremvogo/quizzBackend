@@ -78,12 +78,17 @@ exports.update = (req, res) => {
       message: "Content can not be empty!"
     });
   }
+  const Students = {
+    student_number: req.body.student_number,
+    name: req.body.name,
+    surname: req.body.surname
+  };
 
   console.log(req.body);
 
   Student.updateById(
     req.params.id,
-    new Student(req.body),
+    Students,
     (err, data) => {
       if (err) {
         if (err.kind === "not_found") {
