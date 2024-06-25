@@ -9,13 +9,14 @@ exports.create = (req, res) => {
     });
   }
   // Create a Quizz
-  const Quizz = new Quizz({
+  const Quizzs = {
     title: req.body.title,
     description: req.body.description,
-  });
+    student_id: req.body.student_id
+  };
 
   // Save Quizz in the database
-  Quizz.create(Quizz, (err, data) => {
+  Quizz.create(Quizzs, (err, data) => {
     if (err)
       res.status(500).send({
         message:

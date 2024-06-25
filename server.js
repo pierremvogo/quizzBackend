@@ -32,7 +32,10 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to bezkoder application." });
 });
 
-require("./app/routes/student.routes.js")(app);
+const students = require("./app/controllers/student.controller");
+app.post("/api/students/create", students.create);
+
+//require("./app/routes/student.routes.js")(app);
 require("./app/routes/quizz.routes.js")(app);
 require("./app/routes/question.routes.js")(app);
 require("./app/routes/answer.routes.js")(app);

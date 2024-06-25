@@ -1,9 +1,10 @@
 const sql = require("../../mysql/db.js");
 
 // constructor
-const Quizz = function(Quizz) {
+const Quizz = (Quizz) => {
   this.title = Quizz.title;
   this.description = Quizz.description;
+  this.student_id =  Quizz.student_id;
 };
 
 Quizz.create = (newQuizz, result) => {

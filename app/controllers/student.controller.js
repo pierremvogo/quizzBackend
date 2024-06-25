@@ -9,13 +9,14 @@ exports.create = (req, res) => {
     });
   }
   // Create a Student
-  const Students = new Student({
+  const Students = {
     student_number: req.body.student_number,
     name: req.body.name,
     surname: req.body.surname
-  });
+  };
 
   // Save Student in the database
+  console.log("STUDENT ::::::::::::::::::: ", JSON.stringify(Students))
   Student.create(Students, (err, data) => {
     if (err)
       res.status(500).send({

@@ -9,12 +9,13 @@ exports.create = (req, res) => {
     });
   }
   // Create a Question
-  const Question = new Question({
-    question_text: req.body.question_text
-  });
+  const Questions = {
+    question_text: req.body.question_text,
+    quiz_id: req.body.quiz_id
+  };
 
   // Save Question in the database
-  Question.create(Question, (err, data) => {
+  Question.create(Questions, (err, data) => {
     if (err)
       res.status(500).send({
         message:

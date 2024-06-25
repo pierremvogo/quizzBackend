@@ -1,8 +1,9 @@
 const sql = require("../../mysql/db.js");
 
 // constructor
-const Question = function(Question) {
+const Question = (Question) => {
   this.question_text = Question.question_text;
+  this.quiz_id = Question.quiz_id;
 };
 
 Question.create = (newQuestion, result) => {

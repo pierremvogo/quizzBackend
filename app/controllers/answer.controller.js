@@ -9,13 +9,15 @@ exports.create = (req, res) => {
     });
   }
   // Create a Answer
-  const Answer = new Answer({
+  const Answers = {
     answer_text: req.body.answer_text,
-    is_correct: req.body.is_correct
-  });
+    is_correct: req.body.is_correct,
+    question_id: req.body.question_id,
+    student_id: req.body.student_id
+  };
 
   // Save Answer in the database
-  Answer.create(Answer, (err, data) => {
+  Answer.create(Answers, (err, data) => {
     if (err)
       res.status(500).send({
         message:

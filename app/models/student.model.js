@@ -1,7 +1,7 @@
 const sql = require("../../mysql/db.js");
 
 // constructor
-const Student = function(student) {
+const Student = (student) => {
   this.student_number = student.student_number;
   this.name = student.name;
   this.surname = student.surname;
