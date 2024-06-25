@@ -34,6 +34,13 @@ app.get("/", (req, res) => {
 
 const students = require("./app/controllers/student.controller");
 app.post("/api/students/create", students.create);
+app.get("/api/students/get", students.findAll);
+app.post("/api/students/getById/:id", students.findOne);
+app.post("/api/students/update/:id", students.update);
+app.post("/api/students/delete/:id", students.delete);
+app.post("/api/students/delete/all", students.deleteAll);
+
+
 
 //require("./app/routes/student.routes.js")(app);
 require("./app/routes/quizz.routes.js")(app);

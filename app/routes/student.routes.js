@@ -22,7 +22,7 @@ module.exports = app => {
   router.delete("/delete/:id", students.delete);
 
   // Delete all students
-  router.delete("/deleteAll", students.deleteAll);
+  router.delete("/delete/all", students.deleteAll);
 
   app.use('/api/students', router);
 };
