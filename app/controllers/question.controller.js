@@ -39,6 +39,30 @@ exports.findAll = (req, res) => {
   });
 };
 
+exports.findAllByPagination = (req, res) => {
+  const title = req.query.title;
+  const offset = req.params.offset;
+  Question.getAllByPagination(title, (err, data) => {
+    if (err)
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving Questions."
+      });
+    else res.send(data);
+  },offset);
+};
+
+exports.findCountQuestion = (req, res) => {
+  Question.getCountQuestion((err, data) => {
+    if (err)
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving Questions."
+      });
+    else res.send(data);
+  });
+};
+
 // Find a single Question by Id
 exports.findOne = (req, res) => {
   Question.findById(req.params.id, (err, data) => {

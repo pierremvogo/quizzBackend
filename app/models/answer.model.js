@@ -54,6 +54,37 @@ Answer.getAll = (title, result) => {
   });
 };
 
+Answer.getCountAnswer = result => {
+  sql.query("SELECT COUNT(*) FROM answers", (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(null, err);
+      return;
+    }
+    console.log("Count Answer: ", res);
+    result(null, res);
+  });
+};
+
+Answer.getAllByPagination = (name, result, offset) => {
+  let query = `SELECT * FROM answers LIMIT ${offset}, 5`;
+
+  if (name) {
+    query += ` WHERE title LIKE '%${name}%'`;
+  }
+
+  sql.query(query, (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(null, err);
+      return;
+    }
+
+    console.log("Answers: ", res);
+    result(null, res);
+  });
+};
+
 /*Answer.getAllPublished = result => {
   sql.query("SELECT * FROM answers WHERE published=true", (err, res) => {
     if (err) {

@@ -41,6 +41,30 @@ exports.findAll = (req, res) => {
   });
 };
 
+exports.findAllByPagination = (req, res) => {
+  const name = req.query.name;
+  const offset = req.params.offset
+  Student.getAllByPagination(name, (err, data) => {
+    if (err)
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving Students."
+      });
+    else res.send(data);
+  },offset);
+};
+
+exports.findCountStudent = (req, res) => {
+  Student.getCountStudent((err, data) => {
+    if (err)
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while count Students."
+      });
+    else res.send(data);
+  });
+};
+
 // Find a single Student by Id
 exports.findOne = (req, res) => {
   Student.findById(req.params.id, (err, data) => {
@@ -52,6 +76,22 @@ exports.findOne = (req, res) => {
       } else {
         res.status(500).send({
           message: "Error retrieving Student with id " + req.params.id
+        });
+      }
+    } else res.send(data);
+  });
+};
+
+exports.findOneByNumber = (req, res) => {
+  Student.findByStudentNumber(req.params.student_number, (err, data) => {
+    if (err) {
+      if (err.kind === "not_found") {
+        res.status(404).send({
+          message: `Not found Student with Number ${req.params.student_number}.`
+        });
+      } else {
+        res.status(500).send({
+          message: "Error retrieving Student with Number " + req.params.student_number
         });
       }
     } else res.send(data);
@@ -81,7 +121,8 @@ exports.update = (req, res) => {
   const Students = {
     student_number: req.body.student_number,
     name: req.body.name,
-    surname: req.body.surname
+    surname: req.body.surname,
+    quiz_id: req.body.quiz_id
   };
 
   console.log(req.body);

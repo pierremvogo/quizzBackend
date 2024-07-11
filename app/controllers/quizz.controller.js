@@ -11,8 +11,7 @@ exports.create = (req, res) => {
   // Create a Quizz
   const Quizzs = {
     title: req.body.title,
-    description: req.body.description,
-    student_id: req.body.student_id
+    description: req.body.description
   };
 
   // Save Quizz in the database
@@ -35,6 +34,30 @@ exports.findAll = (req, res) => {
       res.status(500).send({
         message:
           err.message || "Some error occurred while retrieving Quizzs."
+      });
+    else res.send(data);
+  });
+};
+
+exports.findAllByPagination = (req, res) => {
+  const title = req.query.title;
+  const offset = req.params.offset
+  Quizz.getAllByPagination(title, (err, data) => {
+    if (err)
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving Quizzs."
+      });
+    else res.send(data);
+  },offset);
+};
+
+exports.findCountQuiz = (req, res) => {
+  Quizz.getCountQuizz((err, data) => {
+    if (err)
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while Count Quizzs."
       });
     else res.send(data);
   });
@@ -77,12 +100,15 @@ exports.update = (req, res) => {
       message: "Content can not be empty!"
     });
   }
-
+  const Quizzs = {
+    title: req.body.title,
+    description: req.body.description
+  };
   console.log(req.body);
 
   Quizz.updateById(
     req.params.id,
-    new Quizz(req.body),
+    Quizzs,
     (err, data) => {
       if (err) {
         if (err.kind === "not_found") {

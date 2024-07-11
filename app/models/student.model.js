@@ -32,14 +32,48 @@ Student.findById = (id, result) => {
       result(null, res[0]);
       return;
     }
-
     // not found Student with the id
+    result({ kind: "not_found" }, null);
+  });
+};
+
+Student.findByStudentNumber = (student_number, result) => {
+  sql.query(`SELECT * FROM students WHERE student_number = ${student_number}`, (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+    }
+    if (res.length) {
+      console.log("found Student By name: ", res[0]);
+      result(null, res[0]);
+      return;
+    }
     result({ kind: "not_found" }, null);
   });
 };
 
 Student.getAll = (name, result) => {
   let query = "SELECT * FROM students";
+
+  if (name) {
+    query += ` WHERE title LIKE '%${name}%'`;
+  }
+
+  sql.query(query, (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(null, err);
+      return;
+    }
+
+    console.log("Students: ", res);
+    result(null, res);
+  });
+};
+
+Student.getAllByPagination = (name, result, offset) => {
+  let query = `SELECT * FROM students LIMIT ${offset}, 5`;
 
   if (name) {
     query += ` WHERE title LIKE '%${name}%'`;
@@ -70,10 +104,22 @@ Student.getAllPublished = result => {
   });
 };
 
+Student.getCountStudent = result => {
+  sql.query("SELECT COUNT(*) FROM students", (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(null, err);
+      return;
+    }
+    console.log("Count Student: ", res);
+    result(null, res);
+  });
+};
+
 Student.updateById = (id, Student, result) => {
   sql.query(
-    "UPDATE students SET student_number = ?, name = ?, surname = ? WHERE id = ?",
-    [Student.student_number, Student.name, Student.surname, id],
+    "UPDATE students SET student_number = ?, name = ?, surname = ?, quiz_id = ? WHERE id = ?",
+    [Student.student_number, Student.name, Student.surname, Student.quiz_id, id],
     (err, res) => {
       if (err) {
         console.log("error: ", err);

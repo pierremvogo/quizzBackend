@@ -1,4 +1,4 @@
-const Answer = require("../models/Answer.model.js");
+const Answer = require("../models/answer.model.js");
 
 // Create and Save a new Answer
 exports.create = (req, res) => {
@@ -36,6 +36,30 @@ exports.findAll = (req, res) => {
       res.status(500).send({
         message:
           err.message || "Some error occurred while retrieving Answers."
+      });
+    else res.send(data);
+  });
+};
+
+exports.findAllByPagination = (req, res) => {
+  const title = req.query.title;
+  const offset = req.params.offset;
+  Answer.getAllByPagination(title, (err, data) => {
+    if (err)
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving Answers."
+      });
+    else res.send(data);
+  }, offset);
+};
+
+exports.findCountAnswer = (req, res) => {
+  Answer.getCountAnswer((err, data) => {
+    if (err)
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while count Answers."
       });
     else res.send(data);
   });

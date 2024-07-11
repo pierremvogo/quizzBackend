@@ -4,7 +4,6 @@ const sql = require("../../mysql/db.js");
 const Quizz = (Quizz) => {
   this.title = Quizz.title;
   this.description = Quizz.description;
-  this.student_id =  Quizz.student_id;
 };
 
 Quizz.create = (newQuizz, result) => {
@@ -54,6 +53,37 @@ Quizz.getAll = (title, result) => {
     }
 
     console.log("Quizzs: ", res);
+    result(null, res);
+  });
+};
+
+Quizz.getAllByPagination = (name, result, offset) => {
+  let query = `SELECT * FROM quiz LIMIT ${offset}, 5`;
+
+  if (name) {
+    query += ` WHERE title LIKE '%${name}%'`;
+  }
+
+  sql.query(query, (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(null, err);
+      return;
+    }
+
+    console.log("Quiz: ", res);
+    result(null, res);
+  });
+};
+
+Quizz.getCountQuizz = result => {
+  sql.query("SELECT COUNT(*) FROM quiz", (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(null, err);
+      return;
+    }
+    console.log("Count Quiz: ", res);
     result(null, res);
   });
 };

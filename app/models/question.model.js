@@ -57,6 +57,34 @@ Question.getAll = (title, result) => {
   });
 };
 
+Question.getAllByPagination = (name, result, offset) => {
+  let query = `SELECT * FROM questions LIMIT ${offset}, 5`;
+  if (name) {
+    query += ` WHERE title LIKE '%${name}%'`;
+  }
+  sql.query(query, (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(null, err);
+      return;
+    }
+    console.log("Students: ", res);
+    result(null, res);
+  });
+};
+
+Question.getCountQuestion = result => {
+  sql.query("SELECT COUNT(*) FROM questions", (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(null, err);
+      return;
+    }
+    console.log("Count Question: ", res);
+    result(null, res);
+  });
+};
+
 /*Question.getAllPublished = result => {
   sql.query("SELECT * FROM questions WHERE published=true", (err, res) => {
     if (err) {
