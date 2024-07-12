@@ -38,6 +38,25 @@ Question.findById = (id, result) => {
   });
 };
 
+Question.findByQuizId = (quiz_id, result) => {
+  sql.query(`SELECT * FROM questions WHERE quiz_id = ${quiz_id}`, (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+    }
+
+    if (res.length) {
+      console.log("found Question: ", res);
+      result(null, res);
+      return;
+    }
+
+    // not found Question with the id
+    result({ kind: "not_found" }, null);
+  });
+};
+
 Question.getAll = (title, result) => {
   let query = "SELECT * FROM questions";
 

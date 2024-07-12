@@ -40,6 +40,25 @@ Answer.findById = (id, result) => {
   });
 };
 
+Answer.findByQuestionId = (question_id, result) => {
+  sql.query(`SELECT * FROM answers WHERE question_id = ${question_id}`, (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+    }
+
+    if (res.length) {
+      console.log("found Answer: ", res[0]);
+      result(null, res);
+      return;
+    }
+
+    // not found Answer with the id
+    result({ kind: "not_found" }, null);
+  });
+};
+
 Answer.getAll = (title, result) => {
   let query = "SELECT * FROM answers";
   sql.query(query, (err, res) => {

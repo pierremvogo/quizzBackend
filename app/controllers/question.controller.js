@@ -80,6 +80,22 @@ exports.findOne = (req, res) => {
   });
 };
 
+exports.findOneByQuizId = (req, res) => {
+  Question.findByQuizId(req.params.quiz_id, (err, data) => {
+    if (err) {
+      if (err.kind === "not_found") {
+        res.status(404).send({
+          message: `Not found Question with quiz id ${req.params.quiz_id}.`
+        });
+      } else {
+        res.status(500).send({
+          message: "Error retrieving Question with quiz id " + req.params.quiz_id
+        });
+      }
+    } else res.send(data);
+  });
+};
+
 // find all published Questions
 exports.findAllPublished = (req, res) => {
   Question.getAllPublished((err, data) => {

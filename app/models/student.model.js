@@ -138,6 +138,28 @@ Student.updateById = (id, Student, result) => {
     }
   );
 };
+Student.updateQuizId = (id, Student, result) => {
+  sql.query(
+    "UPDATE students SET quiz_id = ? WHERE id = ?",
+    [Student.quiz_id, id],
+    (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+        return;
+      }
+
+      if (res.affectedRows == 0) {
+        // not found Student with the id
+        result({ kind: "not_found" }, null);
+        return;
+      }
+
+      console.log("updated Student: ", { id: id, ...Student });
+      result(null, { id: id, ...Student });
+    }
+  );
+};
 
 Student.remove = (id, result) => {
   sql.query("DELETE FROM students WHERE id = ?", id, (err, res) => {

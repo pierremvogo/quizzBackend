@@ -82,6 +82,22 @@ exports.findOne = (req, res) => {
   });
 };
 
+exports.findOneByQuestionId = (req, res) => {
+  Answer.findByQuestionId(req.params.question_id, (err, data) => {
+    if (err) {
+      if (err.kind === "not_found") {
+        res.status(404).send({
+          message: `Not found Answer with question id ${req.params.question_id}.`
+        });
+      } else {
+        res.status(500).send({
+          message: "Error retrieving Answer with question id " + req.params.question_id
+        });
+      }
+    } else res.send(data);
+  });
+};
+
 // find all published Answers
 exports.findAllPublished = (req, res) => {
   Answer.getAllPublished((err, data) => {
