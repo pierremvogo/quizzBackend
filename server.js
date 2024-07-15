@@ -65,6 +65,7 @@ app.get("/api/questions/get", questions.findAll);
 app.get("/api/questions/get/pagination/:offset", questions.findAllByPagination);
 app.get("/api/questions/count", questions.findCountQuestion);
 app.get("/api/questions/getById/:id", questions.findOne);
+app.get("/api/questions/getByQuizIdAndType/:quiz_id/:question_type", questions.findOneByQuizIdAndType);
 app.get("/api/questions/getByQuizId/:quiz_id", questions.findOneByQuizId);
 app.put("/api/questions/update/:id", questions.update);
 app.delete("/api/questions/delete/:id", questions.delete);

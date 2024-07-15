@@ -11,6 +11,7 @@ exports.create = (req, res) => {
   // Create a Question
   const Questions = {
     question_text: req.body.question_text,
+    question_type: req.body.question_type,
     quiz_id: req.body.quiz_id
   };
 
@@ -96,6 +97,23 @@ exports.findOneByQuizId = (req, res) => {
   });
 };
 
+exports.findOneByQuizIdAndType = (req, res) => {
+  console.log("QUIZ ID PARAMS:", req.params.quiz_id)
+  Question.findByQuizIdAndType(req.params.quiz_id, req.params.question_type, (err, data) => {
+    if (err) {
+      if (err.kind === "not_found") {
+        res.status(404).send({
+          message: `Not found Question with quiz id ${req.params.quiz_id} and question type ${req.params.question_type}.`
+        });
+      } else {
+        res.status(500).send({
+          message: "Error retrieving Question with quiz id " + req.params.quiz_id +"   "+ req.params.question_type
+        });
+      }
+    } else res.send(data);
+  });
+};
+
 // find all published Questions
 exports.findAllPublished = (req, res) => {
   Question.getAllPublished((err, data) => {
@@ -121,6 +139,7 @@ exports.update = (req, res) => {
 
   const Questions = {
     question_text: req.body.question_text,
+    question_type: req.body.question_type,
     quiz_id: req.body.quiz_id
   };
 

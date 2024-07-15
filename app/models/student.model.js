@@ -73,7 +73,7 @@ Student.getAll = (name, result) => {
 };
 
 Student.getAllByPagination = (name, result, offset) => {
-  let query = `SELECT * FROM students LIMIT ${offset}, 5`;
+  let query = `SELECT * FROM students LIMIT ${offset}, 10`;
 
   if (name) {
     query += ` WHERE title LIKE '%${name}%'`;

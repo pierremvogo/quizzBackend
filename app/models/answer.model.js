@@ -86,7 +86,7 @@ Answer.getCountAnswer = result => {
 };
 
 Answer.getAllByPagination = (name, result, offset) => {
-  let query = `SELECT * FROM answers LIMIT ${offset}, 5`;
+  let query = `SELECT * FROM answers LIMIT ${offset}, 10`;
 
   if (name) {
     query += ` WHERE title LIKE '%${name}%'`;

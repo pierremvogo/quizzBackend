@@ -58,7 +58,7 @@ Quizz.getAll = (title, result) => {
 };
 
 Quizz.getAllByPagination = (name, result, offset) => {
-  let query = `SELECT * FROM quiz LIMIT ${offset}, 5`;
+  let query = `SELECT * FROM quiz LIMIT ${offset}, 10`;
 
   if (name) {
     query += ` WHERE title LIKE '%${name}%'`;

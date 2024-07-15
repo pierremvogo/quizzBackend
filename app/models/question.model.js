@@ -3,6 +3,7 @@ const sql = require("../../mysql/db.js");
 // constructor
 const Question = (Question) => {
   this.question_text = Question.question_text;
+  this.question_type = Question.question_type;
   this.quiz_id = Question.quiz_id;
 };
 
@@ -32,7 +33,25 @@ Question.findById = (id, result) => {
       result(null, res[0]);
       return;
     }
+    
 
+    // not found Question with the id
+    result({ kind: "not_found" }, null);
+  });
+};
+
+Question.findByQuizIdAndType = (quiz_id,type,result) => {
+  sql.query(`SELECT * FROM questions WHERE quiz_id = ? AND question_type = ?`,[quiz_id,type], (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+    }
+    if (res.length) {
+      console.log("found Question: ", res);
+      result(null, res);
+      return;
+    }
     // not found Question with the id
     result({ kind: "not_found" }, null);
   });
@@ -45,13 +64,11 @@ Question.findByQuizId = (quiz_id, result) => {
       result(err, null);
       return;
     }
-
     if (res.length) {
       console.log("found Question: ", res);
       result(null, res);
       return;
     }
-
     // not found Question with the id
     result({ kind: "not_found" }, null);
   });
@@ -77,7 +94,7 @@ Question.getAll = (title, result) => {
 };
 
 Question.getAllByPagination = (name, result, offset) => {
-  let query = `SELECT * FROM questions LIMIT ${offset}, 5`;
+  let query = `SELECT * FROM questions LIMIT ${offset}, 10`;
   if (name) {
     query += ` WHERE title LIKE '%${name}%'`;
   }
