@@ -134,15 +134,12 @@ exports.update = (req, res) => {
       message: "Content can not be empty!"
     });
   }
-
   console.log(req.body);
-
   const Questions = {
     question_text: req.body.question_text,
     question_type: req.body.question_type,
     quiz_id: req.body.quiz_id
   };
-
   Question.updateById(
     req.params.id,
     Questions,

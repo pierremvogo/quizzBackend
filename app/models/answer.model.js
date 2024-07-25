@@ -5,7 +5,6 @@ const Answer = (Answer) => {
   this.answer_text = Answer.answer_text;
   this.is_correct = Answer.is_correct;
   this.question_id = Answer.question_id;
-  this.student_id = Answer.student_id;
 };
 
 Answer.create = (newAnswer, result) => {

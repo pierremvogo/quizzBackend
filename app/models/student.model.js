@@ -20,7 +20,7 @@ Student.create = (newStudent, result) => {
 };
 
 Student.findById = (id, result) => {
-  sql.query(`SELECT * FROM students WHERE id = ${id}`, (err, res) => {
+  sql.query(`SELECT * FROM students WHERE student_id = ${id}`, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
@@ -118,7 +118,7 @@ Student.getCountStudent = result => {
 
 Student.updateById = (id, Student, result) => {
   sql.query(
-    "UPDATE students SET student_number = ?, name = ?, surname = ?, quiz_id = ? WHERE id = ?",
+    "UPDATE students SET student_number = ?, name = ?, surname = ?, quiz_id = ? WHERE student_id = ?",
     [Student.student_number, Student.name, Student.surname, Student.quiz_id, id],
     (err, res) => {
       if (err) {
@@ -126,7 +126,6 @@ Student.updateById = (id, Student, result) => {
         result(null, err);
         return;
       }
-
       if (res.affectedRows == 0) {
         // not found Student with the id
         result({ kind: "not_found" }, null);
@@ -140,7 +139,7 @@ Student.updateById = (id, Student, result) => {
 };
 Student.updateQuizId = (id, Student, result) => {
   sql.query(
-    "UPDATE students SET quiz_id = ? WHERE id = ?",
+    "UPDATE students SET quiz_id = ? WHERE student_id = ?",
     [Student.quiz_id, id],
     (err, res) => {
       if (err) {
@@ -162,7 +161,7 @@ Student.updateQuizId = (id, Student, result) => {
 };
 
 Student.remove = (id, result) => {
-  sql.query("DELETE FROM students WHERE id = ?", id, (err, res) => {
+  sql.query("DELETE FROM students WHERE student_id = ?", id, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(null, err);

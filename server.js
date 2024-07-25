@@ -35,6 +35,9 @@ app.get("/", (req, res) => {
 const admin = require("./app/controllers/admin.controller");
 app.get("/api/admin/getByCode/:code", admin.findOneByCode);
 
+const tutor = require("./app/controllers/tutor.controller");
+app.get("/api/tutor/getByCode/:code", tutor.findOneByCode);
+
 const students = require("./app/controllers/student.controller");
 app.post("/api/students/create", students.create);
 app.get("/api/students/get", students.findAll);
@@ -47,6 +50,15 @@ app.put("/api/students/updateQuizId/:id", students.updateQuizId);
 app.delete("/api/students/delete/:id", students.delete);
 app.delete("/api/students/deleteAll", students.deleteAll);
 
+const students_answers = require("./app/controllers/student_answer.controller");
+app.post("/api/studentsAnswers/create", students_answers.create);
+app.get("/api/studentsAnswers/get", students_answers.findAll);
+app.get("/api/studentsAnswers/getById/:student_fkid/:answer_fkid", students_answers.findOne);
+app.put("/api/studentsAnswers/update/:student_fkid/:answer_fkid", students_answers.update);
+app.get("/api/studentsAnswers/getByAnswerId/:id", students_answers.findStudentByAnswerId);
+app.get("/api/studentsAnswers/getByAnswerId1/:id", students_answers.findStudentByAnswerId1);
+app.delete("/api/studentsAnswers/delete/:student_fkid/:answer_fkid", students_answers.delete);
+
 
 const quizzs = require("./app/controllers/quizz.controller");
 app.post("/api/quizzs/create", quizzs.create);
@@ -54,6 +66,7 @@ app.get("/api/quizzs/get", quizzs.findAll);
 app.get("/api/quizzs/get/pagination/:offset", quizzs.findAllByPagination);
 app.get("/api/quizzs/count", quizzs.findCountQuiz);
 app.get("/api/quizzs/getById/:id", quizzs.findOne);
+app.get("/api/quizzs/getHasQuestion", quizzs.findQuizzHasQuestions);
 app.put("/api/quizzs/update/:id", quizzs.update);
 app.delete("/api/quizzs/delete/:id", quizzs.delete);
 app.delete("/api/quizzs/deleteAll", quizzs.deleteAll);

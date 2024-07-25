@@ -136,8 +136,8 @@ Question.getCountQuestion = result => {
 
 Question.updateById = (id, Question, result) => {
   sql.query(
-    "UPDATE questions SET question_text = ? WHERE id = ?",
-    [Question.question_text, id],
+    "UPDATE questions SET question_text = ?, question_type = ? WHERE id = ?",
+    [Question.question_text, Question.question_type, id],
     (err, res) => {
       if (err) {
         console.log("error: ", err);

@@ -12,11 +12,8 @@ exports.create = (req, res) => {
   const Answers = {
     answer_text: req.body.answer_text,
     is_correct: req.body.is_correct,
-    question_id: req.body.question_id,
-    student_id: req.body.student_id
+    question_id: req.body.question_id
   };
-
-  // Save Answer in the database
   Answer.create(Answers, (err, data) => {
     if (err)
       res.status(500).send({
@@ -118,13 +115,11 @@ exports.update = (req, res) => {
       message: "Content can not be empty!"
     });
   }
-
   console.log(req.body);
   const Answers = {
     answer_text: req.body.answer_text,
-    is_correct: req.body.is_correct,
+    is_correct: req.body.is_correct
   };
-
   Answer.updateById(
     req.params.id,
     Answers,
@@ -132,7 +127,7 @@ exports.update = (req, res) => {
       if (err) {
         if (err.kind === "not_found") {
           res.status(404).send({
-            message: `Not found Answer with id ${req.params.id}.`
+            message: `Not found Answer with id ${req.params.id}`
           });
         } else {
           res.status(500).send({

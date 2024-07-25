@@ -80,6 +80,22 @@ exports.findOne = (req, res) => {
   });
 };
 
+exports.findQuizzHasQuestions = (req, res) => {
+  Quizz.findQuizzHasQuestion((err, data) => {
+    if (err) {
+      if (err.kind === "not_found") {
+        res.status(404).send({
+          message: `Not found Quizz with id ${req.params.id}.`
+        });
+      } else {
+        res.status(500).send({
+          message: "Error retrieving Quizz with id " + req.params.id
+        });
+      }
+    } else res.send(data);
+  });
+};
+
 // find all published Quizzs
 exports.findAllPublished = (req, res) => {
   Quizz.getAllPublished((err, data) => {
