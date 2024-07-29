@@ -51,7 +51,20 @@ StudentAnswer.getAll = (name, result) => {
   };
 
   StudentAnswer.getStudentByAnswerId1 = (id, result) => {
-    let query = `SELECT id FROM students INNER JOIN students_answers ON student_id = student_fkid INNER JOIN answers ON id = answer_fkid WHERE answer_fkid = ${id}`; 
+    let query = `SELECT DISTINCT student_id FROM students INNER JOIN students_answers ON student_id = student_fkid INNER JOIN answers ON id = answer_fkid`; 
+    sql.query(query, (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+        return;
+      }
+      console.log("Students and answers : ", res);
+      result(null, res);
+    });
+  };
+
+  StudentAnswer.getQuestionByStudentId = (id, result) => {
+    let query = `SELECT DISTINCT answer_fkid, answer_text_fk, question_text FROM questions INNER JOIN answers ON questions.id = question_id INNER JOIN students_answers ON answers.id = answer_fkid WHERE student_fkid = ${id} AND question_type = "Q.R.O"`; 
     sql.query(query, (err, res) => {
       if (err) {
         console.log("error: ", err);
@@ -81,6 +94,8 @@ StudentAnswer.findById = (student_fkid,answer_fkid, result) => {
       result({ kind: "not_found" }, null);
     });
   };
+
+  
 
 StudentAnswer.updateById = (student_fkid,answer_fkid, Student, result) => {
     sql.query(

@@ -56,7 +56,8 @@ app.get("/api/studentsAnswers/get", students_answers.findAll);
 app.get("/api/studentsAnswers/getById/:student_fkid/:answer_fkid", students_answers.findOne);
 app.put("/api/studentsAnswers/update/:student_fkid/:answer_fkid", students_answers.update);
 app.get("/api/studentsAnswers/getByAnswerId/:id", students_answers.findStudentByAnswerId);
-app.get("/api/studentsAnswers/getByAnswerId1/:id", students_answers.findStudentByAnswerId1);
+app.get("/api/studentsAnswers/getByAnswerId1", students_answers.findStudentByAnswerId1);
+app.get("/api/studentsAnswers/getQuestionByStudent/:id", students_answers.findQuestionByStudentId);
 app.delete("/api/studentsAnswers/delete/:student_fkid/:answer_fkid", students_answers.delete);
 
 

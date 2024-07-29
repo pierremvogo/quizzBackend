@@ -59,6 +59,18 @@ exports.findAll = (req, res) => {
     });
   };
 
+  exports.findQuestionByStudentId = (req, res) => {
+    const id = req.params.id;
+    StudentAnswer.getQuestionByStudentId(id, (err, data) => {
+      if (err)
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while retrieving Answer for  Students."
+        });
+      else res.send(data);
+    });
+  };
+
 exports.findOne = (req, res) => {
     StudentAnswer.findById(req.params.student_fkid,req.params.answer_fkid, (err, data) => {
       if (err) {
