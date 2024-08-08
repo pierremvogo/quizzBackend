@@ -37,7 +37,8 @@ exports.findAll = (req, res) => {
 
   exports.findStudentByAnswerId = (req, res) => {
     const id = req.params.id;
-    StudentAnswer.getStudentByAnswerId(id, (err, data) => {
+    const idquiz = req.params.idquiz;
+    StudentAnswer.getStudentByAnswerId(id,idquiz,(err, data) => {
       if (err)
         res.status(500).send({
           message:
@@ -61,7 +62,8 @@ exports.findAll = (req, res) => {
 
   exports.findQuestionByStudentId = (req, res) => {
     const id = req.params.id;
-    StudentAnswer.getQuestionByStudentId(id, (err, data) => {
+    const id_quiz = req.params.id_quiz
+    StudentAnswer.getQuestionByStudentId(id,id_quiz, (err, data) => {
       if (err)
         res.status(500).send({
           message:

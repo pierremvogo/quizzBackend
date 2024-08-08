@@ -29,7 +29,7 @@ db.connect((err) => {
 
 // simple route
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to bezkoder application." });
+  res.json({ message: "Welcome to Carme Quizz application." });
 });
 
 const admin = require("./app/controllers/admin.controller");
@@ -44,6 +44,7 @@ app.get("/api/students/get", students.findAll);
 app.get("/api/students/get/pagination/:offset", students.findAllByPagination);
 app.get("/api/students/count", students.findCountStudent);
 app.get("/api/students/getById/:id", students.findOne);
+app.get("/api/students/getByQuizId/:id_quiz/:idstudent", students.findOneByQuizId);
 app.get("/api/students/getByNumber/:student_number", students.findOneByNumber);
 app.put("/api/students/update/:id", students.update);
 app.put("/api/students/updateQuizId/:id", students.updateQuizId);
@@ -55,10 +56,15 @@ app.post("/api/studentsAnswers/create", students_answers.create);
 app.get("/api/studentsAnswers/get", students_answers.findAll);
 app.get("/api/studentsAnswers/getById/:student_fkid/:answer_fkid", students_answers.findOne);
 app.put("/api/studentsAnswers/update/:student_fkid/:answer_fkid", students_answers.update);
-app.get("/api/studentsAnswers/getByAnswerId/:id", students_answers.findStudentByAnswerId);
+app.get("/api/studentsAnswers/getByAnswerId/:id/:idquiz", students_answers.findStudentByAnswerId);
 app.get("/api/studentsAnswers/getByAnswerId1", students_answers.findStudentByAnswerId1);
-app.get("/api/studentsAnswers/getQuestionByStudent/:id", students_answers.findQuestionByStudentId);
+app.get("/api/studentsAnswers/getQuestionByStudent/:id/:id_quiz", students_answers.findQuestionByStudentId);
 app.delete("/api/studentsAnswers/delete/:student_fkid/:answer_fkid", students_answers.delete);
+
+const students_quiz = require("./app/controllers/quiz_student.controller");
+app.post("/api/studentsQuiz/create", students_quiz.create);
+app.get("/api/studentsQuiz/get", students_quiz.findAll);
+app.get("/api/studentsQuiz/getByStudentQuiz/:student_fkid/:quiz_fkid", students_quiz.findOne);
 
 
 const quizzs = require("./app/controllers/quizz.controller");

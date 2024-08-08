@@ -37,6 +37,24 @@ Student.findById = (id, result) => {
   });
 };
 
+Student.findByQuizId = (id, idstudent, result) => {
+  sql.query(`SELECT * FROM students WHERE quiz_id = ${id} AND student_id = ${idstudent}`, (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+    }
+
+    if (res.length) {
+      console.log("found Student: ", res[0]);
+      result(null, res[0]);
+      return;
+    }
+    // not found Student with the id
+    result({ kind: "not_found" }, null);
+  });
+};
+
 Student.findByStudentNumber = (student_number, result) => {
   sql.query(`SELECT * FROM students WHERE student_number = ${student_number}`, (err, res) => {
     if (err) {
