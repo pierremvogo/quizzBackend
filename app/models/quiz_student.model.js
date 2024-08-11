@@ -52,6 +52,25 @@ QuizStudent.findById = (student_fkid, quiz_fkid, result) => {
     });
   };
 
+  QuizStudent.findStudentById1 = (student_fkid, quiz_fkid, result) => {
+    sql.query(`SELECT * FROM students_quiz INNER JOIN students ON students_quiz.student_fkid = student_id INNER JOIN students_answers ON students_answers.student_fkid = student_id WHERE correct = "pending" AND answer_text_fk != "" AND students_quiz.student_fkid = ${student_fkid} AND students_quiz.quiz_fkid = ${quiz_fkid}`, (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(err, null);
+        return;
+      }
+      if (res.length) {
+        console.log("found QuizStudent: ", res[0]);
+        result(null, res);
+        return;
+      }
+      // not found Student with the id
+      result({ kind: "not_found" }, null);
+    });
+  };
+
+  
+
   
 
   module.exports = QuizStudent;

@@ -65,6 +65,7 @@ const students_quiz = require("./app/controllers/quiz_student.controller");
 app.post("/api/studentsQuiz/create", students_quiz.create);
 app.get("/api/studentsQuiz/get", students_quiz.findAll);
 app.get("/api/studentsQuiz/getByStudentQuiz/:student_fkid/:quiz_fkid", students_quiz.findOne);
+app.get("/api/studentsQuiz/getByStudentQuiz1/:student_fkid", students_quiz.findOne1);
 
 
 const quizzs = require("./app/controllers/quizz.controller");

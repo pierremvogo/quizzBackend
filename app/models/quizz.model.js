@@ -26,7 +26,6 @@ Quizz.findById = (id, result) => {
       result(err, null);
       return;
     }
-
     if (res.length) {
       console.log("found Quizz: ", res[0]);
       result(null, res[0]);
