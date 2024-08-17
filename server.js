@@ -59,6 +59,12 @@ app.put("/api/studentsAnswers/update/:student_fkid/:answer_fkid", students_answe
 app.get("/api/studentsAnswers/getByAnswerId/:id/:idquiz", students_answers.findStudentByAnswerId);
 app.get("/api/studentsAnswers/getByAnswerId1", students_answers.findStudentByAnswerId1);
 app.get("/api/studentsAnswers/getQuestionByStudent/:id/:id_quiz", students_answers.findQuestionByStudentId);
+app.get("/api/studentsAnswers/getQuestionByStudent1/:id/:id_quiz", students_answers.findQuestionByStudentId1);
+app.get("/api/studentsAnswers/getQuestionAnswer/:id", students_answers.findQuestionAnswer);
+app.get("/api/studentsAnswers/getTrueAnswer/:id", students_answers.findTrueAnswer);
+app.get("/api/studentsAnswers/getQroAnswer", students_answers.findQroAnswer);
+app.get("/api/studentsAnswers/getStudentAnswer/pagination/:offset", students_answers.findstudentAnswerByPagination);
+app.get("/api/studentsAnswers/get/count", students_answers.findCountStudentAnswers);
 app.delete("/api/studentsAnswers/delete/:student_fkid/:answer_fkid", students_answers.delete);
 
 const students_quiz = require("./app/controllers/quiz_student.controller");

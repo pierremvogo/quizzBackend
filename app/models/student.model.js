@@ -179,7 +179,7 @@ Student.updateQuizId = (id, Student, result) => {
 };
 
 Student.remove = (id, result) => {
-  sql.query("DELETE FROM students WHERE student_id = ?", id, (err, res) => {
+  sql.query("DELETE FROM students WHERE student_id = ? CASCADE", id, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(null, err);

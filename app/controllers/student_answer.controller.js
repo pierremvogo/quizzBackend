@@ -73,6 +73,78 @@ exports.findAll = (req, res) => {
     });
   };
 
+  exports.findQuestionByStudentId1 = (req, res) => {
+    const id = req.params.id;
+    const id_quiz = req.params.id_quiz
+    StudentAnswer.getQuestionByStudentId1(id,id_quiz, (err, data) => {
+      if (err)
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while retrieving Answer for  Students."
+        });
+      else res.send(data);
+    });
+  };
+
+  exports.findQuestionAnswer = (req, res) => {
+    const id = req.params.id;
+    StudentAnswer.getQuestionAnswers(id, (err, data) => {
+      if (err)
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while retrieving Answer for  Students."
+        });
+      else res.send(data);
+    });
+  };
+
+  exports.findTrueAnswer = (req, res) => {
+    const id = req.params.id;
+    StudentAnswer.getTrueAnswersByQuestionId(id, (err, data) => {
+      if (err)
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while retrieving True Answer for  Students."
+        });
+      else res.send(data);
+    });
+  };
+
+  exports.findstudentAnswerByPagination = (req, res) => {
+    const name = req.query.name;
+    const offset = req.params.offset
+    StudentAnswer.getStudentAnswerByPagination(name, (err, data) => {
+      if (err)
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while retrieving Students."
+        });
+      else res.send(data);
+    },offset);
+  };
+
+  exports.findCountStudentAnswers = (req, res) => {
+    StudentAnswer.getCountStudentAnswer((err, data) => {
+      if (err)
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while count Students."
+        });
+      else res.send(data);
+    });
+  };
+
+  exports.findQroAnswer = (req, res) => {
+    StudentAnswer.getQroAnswer((err, data) => {
+      if (err)
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while retrieving Qro answer"
+        });
+      else res.send(data);
+    });
+  };
+
 exports.findOne = (req, res) => {
     StudentAnswer.findById(req.params.student_fkid,req.params.answer_fkid, (err, data) => {
       if (err) {

@@ -66,4 +66,20 @@ exports.findOne = (req, res) => {
     });
   };
 
+  exports.findOneStudentQuizz = (req, res) => {
+    QuizStudent.findStudentQuizz(req.params.student_fkid, req.body.quizz_fkid, (err, data) => {
+      if (err) {
+        if (err.kind === "not_found") {
+          res.status(404).send({
+            message: `Not found Student QuizStudent with student_fkid ${req.params.student_fkid}`
+          });
+        } else {
+          res.status(500).send({
+            message: "Error retrieving QuizStudent with student_id " + req.params.student_fkid
+          });
+        }
+      } else res.send(data);
+    });
+  };
+
  

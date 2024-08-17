@@ -76,6 +76,90 @@ StudentAnswer.getAll = (name, result) => {
     });
   };
 
+  StudentAnswer.getQuestionByStudentId1 = (id, id_quiz, result) => {
+    let query = `SELECT DISTINCT answer_fkid, answer_text_fk, questions.id FROM questions INNER JOIN answers ON questions.id = question_id INNER JOIN students_answers ON answers.id = answer_fkid WHERE correct = "pending" AND student_fkid = ${id} AND quiz_id = ${id_quiz} AND question_type = "Q.R.O"`; 
+    sql.query(query, (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+        return;
+      }
+      console.log("Students and answers : ", res);
+      result(null, res);
+    });
+  };
+
+  StudentAnswer.getQuestionAnswers = (id, result) => {
+    let query = `SELECT DISTINCT answer_fkid, answer_text_fk, quiz_id, question_text, answer_text, is_correct, correct, questions.id FROM questions INNER JOIN answers ON questions.id = question_id INNER JOIN students_answers ON answers.id = answer_fkid WHERE student_fkid = ${id}`; 
+    sql.query(query, (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+        return;
+      }
+      console.log("Students and answers : ", res);
+      result(null, res);
+    });
+  };
+
+  StudentAnswer.getTrueAnswersByQuestionId = (id, result) => {
+    let query = `SELECT DISTINCT answer_text, question_text FROM  answers INNER JOIN questions ON questions.id = answers.question_id WHERE question_id = ${id} AND is_correct = 1`; 
+    sql.query(query, (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+        return;
+      }
+      console.log("True answers : ", res);
+      result(null, res);
+    });
+  };
+  
+  StudentAnswer.getCountStudentAnswer = result => {
+    sql.query(`SELECT COUNT(*) FROM students_answers INNER JOIN answers ON students_answers.answer_fkid = answers.id INNER JOIN questions ON answers.question_id = questions.id WHERE correct = "pending" AND answer_text_fk != ""`, (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+        return;
+      }
+      console.log("Count StudentAnswer: ", res);
+      result(null, res);
+    });
+  };
+
+  StudentAnswer.getStudentAnswerByPagination = (name, result, offset) => {
+    let query = `SELECT * FROM students_answers INNER JOIN answers ON students_answers.answer_fkid = answers.id INNER JOIN questions ON answers.question_id = questions.id WHERE correct = "pending" AND answer_text_fk != "" LIMIT ${offset}, 10`;
+  
+    if (name) {
+      query += ` WHERE title LIKE '%${name}%'`;
+    }
+  
+    sql.query(query, (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+        return;
+      }
+  
+      console.log("Students: ", res);
+      result(null, res);
+    });
+  };
+
+
+  StudentAnswer.getQroAnswer = (result) => {
+    let query = `SELECT * FROM  students_answers INNER JOIN answers ON students_answers.answer_fkid = answers.id INNER JOIN questions ON answers.question_id = questions.id WHERE correct = "pending" AND answer_text_fk != ""`; 
+    sql.query(query, (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+        return;
+      }
+      console.log("True answers : ", res);
+      result(null, res);
+    });
+  };
+
 
   
 StudentAnswer.findById = (student_fkid,answer_fkid, result) => {
